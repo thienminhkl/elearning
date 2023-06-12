@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   extends: [
@@ -12,25 +12,25 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
 
     'eslint-config-prettier',
-    'prettier'
+    'prettier',
   ],
   plugins: ['prettier'],
   settings: {
     react: {
-      version: 'detect'
+      version: 'detect',
     },
     'import/resolver': {
       node: {
         paths: [path.resolve(__dirname, '')],
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
       typescript: {
-        project: path.resolve(__dirname, './tsconfig.json')
-      }
-    }
+        project: path.resolve(__dirname, './tsconfig.json'),
+      },
+    },
   },
   env: {
-    node: true
+    node: true,
   },
   rules: {
     'react/react-in-jsx-scope': 'off',
@@ -39,15 +39,24 @@ module.exports = {
       'warn',
       {
         arrowParens: 'always',
-        semi: false,
-        trailingComma: 'none',
-        tabWidth: 2,
-        endOfLine: 'auto',
-        useTabs: false,
+        bracketSameLine: false,
+        bracketSpacing: true,
+        embeddedLanguageFormatting: 'auto',
+        htmlWhitespaceSensitivity: 'css',
+        insertPragma: false,
+        jsxSingleQuote: false,
+        printWidth: 80,
+        proseWrap: 'preserve',
+        quoteProps: 'as-needed',
+        requirePragma: false,
+        semi: true,
+        singleAttributePerLine: false,
         singleQuote: true,
-        printWidth: 120,
-        jsxSingleQuote: true
-      }
-    ]
-  }
-}
+        tabWidth: 2,
+        trailingComma: 'es5',
+        useTabs: false,
+        vueIndentScriptAndStyle: false,
+      },
+    ],
+  },
+};
