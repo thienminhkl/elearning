@@ -35,28 +35,5 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-no-target-blank': 'warn',
-    'prettier/prettier': [
-      'warn',
-      {
-        arrowParens: 'always',
-        bracketSameLine: false,
-        bracketSpacing: true,
-        embeddedLanguageFormatting: 'auto',
-        htmlWhitespaceSensitivity: 'css',
-        insertPragma: false,
-        jsxSingleQuote: false,
-        printWidth: 80,
-        proseWrap: 'preserve',
-        quoteProps: 'as-needed',
-        requirePragma: false,
-        semi: true,
-        singleAttributePerLine: false,
-        singleQuote: true,
-        tabWidth: 2,
-        trailingComma: 'es5',
-        useTabs: false,
-        vueIndentScriptAndStyle: false,
-      },
-    ],
   },
 };
