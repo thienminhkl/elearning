@@ -193,7 +193,7 @@ function RegisterForm() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, fontSize: '1.6rem' }}
+              sx={{ mt: 3, mb: 3, fontSize: '1.6rem' }}
             >
               Đăng ký
             </Button>
