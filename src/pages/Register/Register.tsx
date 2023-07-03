@@ -1,9 +1,14 @@
+import RegisterForm from '~/components/Register/RegisterForm';
 import './Register.scss';
 
 //---------------------------------------------------------------------
 
 function Register() {
-  return <div>Register</div>;
+  return (
+    <div>
+      <RegisterForm />
+    </div>
+  );
 }
 
 export default Register;
