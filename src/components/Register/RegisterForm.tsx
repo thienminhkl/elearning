@@ -2,211 +2,228 @@ import * as Yup from 'yup';
 //axios
 import axios from 'axios';
 //react
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 //@mui
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Grid,
-  Link,
-  TextField,
+  Alert,
+  IconButton,
+  InputAdornment,
+  Stack,
   ThemeProvider,
-  Typography,
-  createTheme,
+  Grid,
 } from '@mui/material';
 //const
-import { CYBER_TOKEN } from '~/const/const';
+import { CYBER_TOKEN, defaultTheme } from '~/const/const';
 //formik
-import { useFormik } from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import useResponsive from '~/hooks/useResponsive';
+import { RHFTextField } from '../hook-form';
+import { useState } from 'react';
+import { LoadingButton } from '@mui/lab';
+import Iconify from '../iconify/Iconify';
+import FormProvider from '../hook-form/FormProvider';
+
 //---------------------------------------------------------------------
-
-const defaultTheme = createTheme({
-  components: {
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '& .MuiInputBase-root, & .MuiInputLabel-root, & .MuiFormHelperText-root.Mui-error':
-            {
-              fontSize: '1.6rem',
-            },
-        },
-      },
-    },
-  },
-});
-
-const defaultValue = {
-  taiKhoan: '',
-  matKhau: '',
-  hoTen: '',
-  soDT: '',
-  maNhom: '',
-  email: '',
-  submit: null,
+type FormValuesProps = {
+  taiKhoan: string;
+  matKhau: string;
+  hoTen: string;
+  soDT: string;
+  maNhom: string;
+  email: string;
+  afterSubmit?: string;
 };
 
-const registerSchema = Yup.object({
-  email: Yup.string().email('email không hợp lệ').required('Hãy điền Email'),
-  hoTen: Yup.string().required('Hãy điền Họ tên'),
-  matKhau: Yup.string()
-    .min(8, 'Mật khẩu ít nhất 8 ký tự')
-    .required('Hãy điền Mật khẩu'),
-  taiKhoan: Yup.string()
-    .min(6, 'Tài khoản ít nhất 6 ký tự')
-    .required('Hãy điền Tài khoản'),
-  soDT: Yup.string().required('Hãy điền Số điện thoại'),
-  maNhom: Yup.string().required('Hãy điền Mã nhóm'),
-});
 //---------------------------------------------------------------------
 
 function RegisterForm() {
   const navigate = useNavigate();
+  const isDesktop = useResponsive('up', 'md');
+  const [showPassword, setShowPassword] = useState(false);
 
-  const formik = useFormik({
-    initialValues: defaultValue,
-    validationSchema: registerSchema,
-    onSubmit: async (values, helpers) => {
-      try {
-        const resp = await axios({
-          url: 'https://elearningnew.cybersoft.edu.vn/api/QuanLyNguoiDung/DangKy',
-          method: 'post',
-          data: {
-            email: values.email,
-            hoTen: values.hoTen,
-            matKhau: values.matKhau,
-            taiKhoan: values.taiKhoan,
-            soDT: values.soDT,
-            maNhom: values.maNhom,
-          },
-          headers: { TokenCybersoft: ` ${CYBER_TOKEN}` },
-        });
-        console.log(resp);
+  const defaultValues = {
+    taiKhoan: '',
+    matKhau: '',
+    hoTen: '',
+    soDT: '',
+    maNhom: 'GP01',
+    email: '',
+  };
 
-        navigate('/login');
-      } catch (err: any) {
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.response.data });
-        helpers.setSubmitting(false);
-      }
-    },
+  const RegisterSchema = Yup.object({
+    email: Yup.string().email('email không hợp lệ').required('Hãy điền Email'),
+    hoTen: Yup.string().required('Hãy điền Họ tên'),
+    matKhau: Yup.string()
+      .min(8, 'Mật khẩu ít nhất 8 ký tự')
+      .required('Hãy điền Mật khẩu'),
+    taiKhoan: Yup.string()
+      .min(6, 'Tài khoản ít nhất 6 ký tự')
+      .required('Hãy điền Tài khoản'),
+    soDT: Yup.string().required('Hãy điền Số điện thoại'),
+    maNhom: Yup.string().required('Hãy điền Mã nhóm'),
   });
+
+  const methods = useForm<FormValuesProps>({
+    resolver: yupResolver(RegisterSchema),
+    defaultValues,
+  });
+
+  const {
+    reset,
+    setError,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = methods;
+
+  const onSubmit = async (data: FormValuesProps) => {
+    try {
+      await axios({
+        url: 'https://elearningnew.cybersoft.edu.vn/api/QuanLyNguoiDung/DangKy',
+        method: 'post',
+        data: {
+          email: data.email,
+          hoTen: data.hoTen,
+          matKhau: data.matKhau,
+          taiKhoan: data.taiKhoan,
+          soDT: data.soDT,
+          maNhom: data.maNhom,
+        },
+        headers: { TokenCybersoft: ` ${CYBER_TOKEN}` },
+      });
+      navigate('/login');
+    } catch (error: any) {
+      console.error(error);
+
+      reset();
+
+      setError('afterSubmit', {
+        ...error,
+        message: error.response.data || error,
+      });
+    }
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container maxWidth="md">
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h3">
-            Đăng ký
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            sx={{ mt: 3 }}
-            onSubmit={formik.handleSubmit}
+      <Stack
+        sx={{
+          textAlign: '-webkit-center',
+          backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light'
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+        height={'100vh'}
+      >
+        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+          <Stack
+            sx={{
+              backgroundColor: 'white',
+              my: 5,
+              borderRadius: 5,
+              opacity: 0.85,
+            }}
+            width={isDesktop ? '60%' : '80%'}
+            height={'90vh'}
+            alignItems={'center'}
+            justifyContent={'center'}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                {/* TODO: RHFTextField */}
-                <TextField
-                  {...formik.getFieldProps('taiKhoan')}
-                  error={!!(formik.touched.taiKhoan && formik.errors.taiKhoan)}
-                  helperText={formik.touched.taiKhoan && formik.errors.taiKhoan}
-                  label="Tài khoản"
-                  name="taiKhoan"
-                  fullWidth
-                />
+            <Stack spacing={2} sx={{ my: 5, mx: 3 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <RHFTextField
+                    name="taiKhoan"
+                    label="Tài khoản"
+                    autoComplete="account"
+                  />
+                  <RHFTextField
+                    name="email"
+                    label="Email"
+                    autoComplete="email"
+                    sx={{ my: 2 }}
+                  />
+                  <RHFTextField
+                    name="matKhau"
+                    label="Mật Khẩu"
+                    autoComplete="current-password"
+                    type={showPassword ? 'text' : 'password'}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                          >
+                            <Iconify
+                              icon={
+                                showPassword
+                                  ? 'eva:eye-fill'
+                                  : 'eva:eye-off-fill'
+                              }
+                            />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <RHFTextField name="hoTen" label="Họ tên" />
+                  <RHFTextField
+                    name="soDT"
+                    label="Số điện thoại"
+                    type="number"
+                    sx={{ my: 2 }}
+                  />
+                  <RHFTextField name="maNhom" label="Mã nhóm" />
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  {...formik.getFieldProps('matKhau')}
-                  error={!!(formik.touched.matKhau && formik.errors.matKhau)}
-                  helperText={formik.touched.matKhau && formik.errors.matKhau}
-                  label="Mật Khẩu"
-                  name="matKhau"
-                  type="password"
-                  fullWidth
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  {...formik.getFieldProps('email')}
-                  error={!!(formik.touched.email && formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  label="Địa chỉ Email"
-                  name="email"
-                  type="email"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  {...formik.getFieldProps('hoTen')}
-                  error={!!(formik.touched.hoTen && formik.errors.hoTen)}
-                  helperText={formik.touched.hoTen && formik.errors.hoTen}
-                  label="Họ tên"
-                  name="hoTen"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  {...formik.getFieldProps('soDT')}
-                  error={!!(formik.touched.soDT && formik.errors.soDT)}
-                  helperText={formik.touched.soDT && formik.errors.soDT}
-                  label="Số điện thoại"
-                  name="soDT"
-                  type="number"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  {...formik.getFieldProps('maNhom')}
-                  error={!!(formik.touched.maNhom && formik.errors.maNhom)}
-                  helperText={formik.touched.maNhom && formik.errors.maNhom}
-                  label="Mã nhóm"
-                  name="maNhom"
-                  fullWidth
-                />
-              </Grid>
-              {formik.errors.submit && (
-                <Typography color="error" sx={{ mt: 3 }} variant="body2">
-                  {formik.errors.submit}
-                </Typography>
-              )}
-            </Grid>
-            <Button
+            </Stack>
+            {!!errors.afterSubmit && (
+              <Alert severity="error" style={{ placeItems: 'center' }}>
+                {errors.afterSubmit.message}
+              </Alert>
+            )}
+            <Stack>
+              <NavLink
+                to="/login"
+                style={{ fontSize: '1.2rem', marginLeft: 'auto' }}
+              >
+                Bạn đã tài khoản? Đăng nhập
+              </NavLink>
+            </Stack>
+
+            <LoadingButton
+              color="inherit"
+              size="large"
               type="submit"
-              fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 3, fontSize: '1.6rem' }}
+              loading={isSubmitSuccessful || isSubmitting}
+              sx={{
+                bgcolor: 'text.primary',
+                color: (theme) =>
+                  theme.palette.mode === 'light' ? 'common.white' : 'grey.800',
+                '&:hover': {
+                  bgcolor: 'text.primary',
+                  color: (theme) =>
+                    theme.palette.mode === 'light'
+                      ? 'common.white'
+                      : 'grey.800',
+                },
+                my: 2,
+                fontSize: '1.6rem',
+              }}
             >
               Đăng ký
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="h5">
-                  Bạn đã có tài khoản? Đăng nhập!
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
+            </LoadingButton>
+          </Stack>
+        </FormProvider>
+      </Stack>
     </ThemeProvider>
   );
 }
