@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { CYBER_TOKEN, defaultTheme } from '~/const/const';
+import { ACCESS_TOKEN, CYBER_TOKEN, defaultTheme } from '~/const/const';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider from '../hook-form/FormProvider';
@@ -17,6 +17,7 @@ import { RHFTextField } from '../hook-form';
 import Iconify from '../iconify/Iconify';
 import { LoadingButton } from '@mui/lab';
 import useResponsive from '~/hooks/useResponsive';
+import { setLocal } from '~/untils/localStogate';
 
 //---------------------------------------------------------------------
 type FormValuesProps = {
@@ -59,7 +60,7 @@ function LoginForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await axios({
+      const resp = await axios({
         url: 'https://elearningnew.cybersoft.edu.vn/api/QuanLyNguoiDung/DangNhap',
         method: 'post',
         data: {
@@ -68,6 +69,7 @@ function LoginForm() {
         },
         headers: { TokenCybersoft: ` ${CYBER_TOKEN}` },
       });
+      setLocal(ACCESS_TOKEN, resp.data.accessToken);
       navigate('/');
     } catch (error: any) {
       console.error(error);
