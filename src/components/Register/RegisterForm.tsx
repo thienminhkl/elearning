@@ -64,8 +64,6 @@ const registerSchema = Yup.object({
 
 function RegisterForm() {
   const navigate = useNavigate();
-  const num: Array[] = [3, 6, 9];
-  console.log(num);
 
   const formik = useFormik({
     initialValues: defaultValue,
