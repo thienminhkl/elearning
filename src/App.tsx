@@ -8,25 +8,23 @@ import AdminPlate from './templates/admin/AdminPlate';
 
 export function App() {
   return (
-    <>
-      <Routes>
-        <Route path="" element={<HomePlate />}>
-          <Route index element={<Home />}></Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="profile" element={<Profile />}></Route>
-          <Route path="detail">
-            <Route path=":productID" element={<Detail />} />
-          </Route>
-          <Route path="courses" element={<Courses />}></Route>
-          <Route path="register" element={<Register />}></Route>
-          <Route path="search" element={<Search />}></Route>
+    <Routes>
+      <Route path="" element={<HomePlate />}>
+        <Route index element={<Home />}></Route>
+        <Route path="login" element={<Login />}></Route>
+        <Route path="profile" element={<Profile />}></Route>
+        <Route path="detail">
+          <Route path=":productID" element={<Detail />} />
         </Route>
-        <Route path="/" element={<AdminPlate />}>
-          <Route path="admin" element={<Admin />}></Route>
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+        <Route path="courses" element={<Courses />}></Route>
+        <Route path="register" element={<Register />}></Route>
+        <Route path="search" element={<Search />}></Route>
+      </Route>
+      <Route path="/" element={<AdminPlate />}>
+        <Route path="admin" element={<Admin />}></Route>
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
