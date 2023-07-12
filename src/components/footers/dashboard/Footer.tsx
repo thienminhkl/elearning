@@ -17,12 +17,36 @@ import {
 import reCaptcha from '~/assets/img/reCaptcha.png';
 //hooks
 import useResponsive from '~/hooks/useResponsive';
+//react
+import { useState, useEffect } from 'react';
 //---------------------------------------------------------------------
 
 export default function Footer() {
   const isDesktop = useResponsive('up', 'md');
   const isMobile = useResponsive('down', 'sm');
+  const [width, setWidth] = useState(300);
+  const [url, setUrl] = useState(
+    'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flophocviet&tabs=timeline&width=300&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId'
+  );
 
+  useEffect(() => {
+    if (isDesktop && !isMobile) {
+      setWidth(300);
+      setUrl(
+        'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flophocviet&tabs=timeline&width=300&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId'
+      );
+    } else if (!isDesktop && !isMobile) {
+      setWidth(250);
+      setUrl(
+        'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flophocviet&tabs=timeline&width=250&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId'
+      );
+    } else if (isMobile) {
+      setWidth(350);
+      setUrl(
+        'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flophocviet&tabs=timeline&width=350&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId'
+      );
+    }
+  }, [isDesktop, isMobile]);
   return (
     <Stack sx={{ bgcolor: '#090b26', m: 0, color: 'white' }}>
       <Grid container spacing={3} sx={{ mt: 0, mb: 2 }}>
@@ -172,52 +196,14 @@ export default function Footer() {
           </Stack>
         </Grid>
         <Grid item xs={12} sm={4}>
-          {isDesktop
-            ? !isMobile && (
-                <Stack alignItems={'center'} mx={2}>
-                  <iframe
-                    title="fb"
-                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flophocviet&tabs=timeline&width=300&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-                    width="300"
-                    height="300"
-                  ></iframe>
-                  <Typography sx={{ mt: 2 }} width={'60%'}>
-                    Anh ngữ giao tiếp - Khởi động Anh ngữ giao tiếp - Lấy đà Anh
-                    ngữ giao tiếp - Bật nhảy Anh ngữ giao tiếp - Bay lên không
-                    Anh ngữ giao tiếp - Tiếp đất
-                  </Typography>
-                </Stack>
-              )
-            : !isMobile && (
-                <Stack alignItems={'center'} mx={2}>
-                  <iframe
-                    title="fb"
-                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flophocviet&tabs=timeline&width=180&height=250&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-                    width="180"
-                    height="250"
-                  ></iframe>
-                  <Typography sx={{ mt: 2 }}>
-                    Anh ngữ giao tiếp - Khởi động Anh ngữ giao tiếp - Lấy đà Anh
-                    ngữ giao tiếp - Bật nhảy Anh ngữ giao tiếp - Bay lên không
-                    Anh ngữ giao tiếp - Tiếp đất
-                  </Typography>
-                </Stack>
-              )}
-          {isMobile && (
-            <Stack mx={2}>
-              <iframe
-                title="fb"
-                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flophocviet&tabs=timeline&width=350&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-                width="350"
-                height="300"
-              ></iframe>
-              <Typography sx={{ mt: 2 }}>
-                Anh ngữ giao tiếp - Khởi động Anh ngữ giao tiếp - Lấy đà Anh ngữ
-                giao tiếp - Bật nhảy Anh ngữ giao tiếp - Bay lên không Anh ngữ
-                giao tiếp - Tiếp đất
-              </Typography>
-            </Stack>
-          )}
+          <Stack alignItems={'center'} mx={2}>
+            <iframe title="fb" src={url} width={width} height="300" />
+            <Typography sx={{ mt: 2 }}>
+              Anh ngữ giao tiếp - Khởi động Anh ngữ giao tiếp - Lấy đà Anh ngữ
+              giao tiếp - Bật nhảy Anh ngữ giao tiếp - Bay lên không Anh ngữ
+              giao tiếp - Tiếp đất
+            </Typography>
+          </Stack>
         </Grid>
       </Grid>
     </Stack>
