@@ -1,6 +1,8 @@
 import './App.css';
+//react
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
+//templates
 import HomePlate from './templates/dashboard/HomePlate';
 import AdminPlate from './templates/admin/AdminPlate';
 
@@ -18,7 +20,6 @@ export function App() {
         </Route>
         <Route path="courses" element={<Courses />}></Route>
         <Route path="register" element={<Register />}></Route>
-        <Route path="search" element={<Search />}></Route>
       </Route>
       <Route path="/" element={<AdminPlate />}>
         <Route path="admin" element={<Admin />}></Route>
@@ -43,7 +44,6 @@ const Login = lazy(() => import('./pages/Login/Login'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 const Detail = lazy(() => import('./pages/Detail/Detail'));
 const Register = lazy(() => import('./pages/Register/Register'));
-const Search = lazy(() => import('./pages/Search/Search'));
 const Courses = lazy(() => import('./pages/Courses/Courses'));
 const Admin = lazy(() => import('./pages/Admin/Admin'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));

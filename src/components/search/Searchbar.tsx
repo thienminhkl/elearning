@@ -1,11 +1,19 @@
+//@mui
 import { Autocomplete, InputAdornment, InputBase } from '@mui/material';
 import Box from '@mui/material/Box';
+//axios
 import axios from 'axios';
+//react
 import { useEffect, useState } from 'react';
+//const
 import { CYBER_TOKEN } from '~/const/const';
+//inconify
 import Iconify from '../iconify/Iconify';
-import { Search } from './Seachbar';
+//type
 import { Course, CourseList } from '~/type/course/course';
+import { Search } from './Seachbar';
+
+//-------------------------------------------------------
 
 export default function SearchBar() {
   const [listCourse, setListCourse] = useState<CourseList>([]);
@@ -65,7 +73,12 @@ export default function SearchBar() {
                   />
                 </InputAdornment>
               }
-              sx={{ typography: 'h6', justifyContent: 'center' }}
+              sx={{
+                typography: 'h6',
+                justifyContent: 'center',
+                fontSize: '1.6rem',
+                color: 'white',
+              }}
             />
           )}
         />
