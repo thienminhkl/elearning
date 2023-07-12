@@ -11,7 +11,6 @@ import imgCarousel from '~/assets/img/carousel.jpg';
 function Carousel() {
   const isDesktop = useResponsive('up', 'md');
   const isMobile = useResponsive('down', 'sm');
-  console.log({ isDesktop, isMobile });
 
   return (
     <Stack className="carousel">
