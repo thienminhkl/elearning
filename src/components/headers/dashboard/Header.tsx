@@ -1,12 +1,12 @@
 // @mui
 import { AppBar, IconButton, Stack, Toolbar, Typography } from '@mui/material';
+import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 // hooks
 import useResponsive from '~/hooks/useResponsive';
 //react
 import { useState } from 'react';
 // components
-import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
-import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import Category from '~/components/category/Category';
 import SearchBar from '~/components/search/Searchbar';
 import ProfileSetting from '~/components/profile-setting/ProfileSetting';
@@ -19,7 +19,7 @@ export default function Header() {
 
   return (
     <AppBar
-      sx={{ backgroundColor: '#7ba6a6', opacity: 0.8, position: 'relative' }}
+      sx={{ backgroundColor: '#181d5b', opacity: 0.8, position: 'relative' }}
     >
       <Toolbar sx={{ height: 1, placeContent: 'space-around' }}>
         <>
