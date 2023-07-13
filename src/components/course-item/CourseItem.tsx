@@ -46,7 +46,9 @@ export default function CourseItem({ course }: Props) {
           </Stack>
         </CardContent>
         <CardActions sx={{ justifyContent: 'right' }}>
-          <Button variant="contained">ĐĂNG KÝ</Button>
+          <Button variant="contained" href={`/detail/${course?.maKhoaHoc}`}>
+            ĐĂNG KÝ
+          </Button>
         </CardActions>
       </Box>
     </Card>
