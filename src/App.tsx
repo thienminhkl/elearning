@@ -14,9 +14,12 @@ export function App() {
       <Route path="" element={<HomePlate />}>
         <Route index element={<Home />}></Route>
         <Route path="login" element={<Login />}></Route>
+        <Route path="search">
+          <Route path=":textSearch" element={<Search />} />
+        </Route>
         <Route path="profile" element={<Profile />}></Route>
         <Route path="detail">
-          <Route path=":productID" element={<Detail />} />
+          <Route path=":detailID" element={<Detail />} />
         </Route>
         <Route path="courses" element={<Courses />}></Route>
         <Route path="register" element={<Register />}></Route>
@@ -43,6 +46,7 @@ const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/Login/Login'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
 const Detail = lazy(() => import('./pages/Detail/Detail'));
+const Search = lazy(() => import('./pages/Search/Search'));
 const Register = lazy(() => import('./pages/Register/Register'));
 const Courses = lazy(() => import('./pages/Courses/Courses'));
 const Admin = lazy(() => import('./pages/Admin/Admin'));

@@ -1,88 +1,44 @@
 //@mui
-import { Autocomplete, InputAdornment, InputBase } from '@mui/material';
+import { IconButton, InputAdornment, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
-//axios
-import axios from 'axios';
 //react
-import { useEffect, useState } from 'react';
-//const
-import { CYBER_TOKEN } from '~/const/const';
-//inconify
-import Iconify from '../iconify/Iconify';
+import { useState } from 'react';
 //type
-import { Course, CourseList } from '~/type/course/course';
-import { Search } from './Seachbar';
-
+import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
 //-------------------------------------------------------
-
 export default function SearchBar() {
-  const [listCourse, setListCourse] = useState<CourseList>([]);
-  const [courseSel, setCourseSel] = useState<Course | null>();
+  const [searchKey, setSearchKey] = useState<string>();
+  const navigate = useNavigate();
 
-  const handleGetCourseNameList = async () => {
-    try {
-      const resp = await axios({
-        url: `https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP01`,
-        method: 'get',
-        headers: { TokenCybersoft: ` ${CYBER_TOKEN}` },
-      });
-      setListCourse(
-        resp.data.sort(
-          (a: any, b: any) => -b.tenKhoaHoc.localeCompare(a.tenKhoaHoc)
-        )
-      );
-    } catch (error: any) {
-      console.error(error.response.data);
-    }
-  };
-
-  useEffect(() => {
-    handleGetCourseNameList();
-  }, []);
-
-  const handleCourseSel = (newInputValue: Course | null) => {
-    setCourseSel(newInputValue);
+  const handleSearch = () => {
+    navigate(`/search/${searchKey}`);
   };
 
   return (
-    <Box sx={{ flexGrow: 0.8, mx: 3 }}>
-      <Search>
-        <Autocomplete
-          options={listCourse}
-          getOptionLabel={(option: Course) => `${option.tenKhoaHoc}`}
-          isOptionEqualToValue={(option, value) =>
-            option.maKhoaHoc === value.maKhoaHoc
-          }
-          onChange={(_, newInputValue: Course | null) => {
-            handleCourseSel(newInputValue);
-          }}
-          renderInput={(params: any) => (
-            <InputBase
-              {...params.InputProps}
-              inputProps={params.inputProps}
-              fullWidth
-              placeholder="Tìm kiếm khóa học..."
-              startAdornment={
-                <InputAdornment position="start">
-                  <Iconify
-                    icon="eva:search-fill"
-                    sx={{
-                      color: 'text.disabled',
-                      ml: 0.5,
-                    }}
-                  />
-                </InputAdornment>
-              }
-              sx={{
-                typography: 'h6',
-                justifyContent: 'center',
-                fontSize: '1.6rem',
-                color: 'white',
-              }}
-            />
-          )}
-        />
-      </Search>
+    <Box
+      sx={{
+        flexGrow: 0.8,
+        mx: 3,
+        bgcolor: 'white',
+        borderRadius: 1,
+      }}
+    >
+      <TextField
+        fullWidth
+        value={searchKey}
+        placeholder="Tìm kiếm khóa học..."
+        onChange={(e) => setSearchKey(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton onClick={handleSearch}>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
     </Box>
   );
 }
