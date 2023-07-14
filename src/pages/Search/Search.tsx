@@ -46,12 +46,14 @@ export default function Search() {
       <Typography variant="h3">
         Tìm thấy {listCourse?.length} khóa học {textSearch}
       </Typography>
-      {listCourse?.slice(page * 5, page * 5 + 5).map((course: Course) => (
-        <CourseSearch course={course} key={course?.maKhoaHoc} />
-      ))}
+      {listCourse
+        ?.slice((page - 1) * 5, (page - 1) * 5 + 5)
+        .map((course: Course) => (
+          <CourseSearch course={course} key={course?.maKhoaHoc} />
+        ))}
       <Stack sx={{ placeItems: 'center' }}>
         <Pagination
-          count={listCourse ? Math.floor(listCourse?.length / 5) : 1}
+          count={listCourse ? Math.ceil(listCourse?.length / 5) : 1}
           page={page}
           onChange={handleChange}
         />

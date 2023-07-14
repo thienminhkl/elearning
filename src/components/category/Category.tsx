@@ -1,6 +1,7 @@
 //@mui
 import {
   Box,
+  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -14,10 +15,15 @@ import * as React from 'react';
 import { CategoryList } from '~/type/course/course';
 import axios from 'axios';
 import { CYBER_TOKEN } from '~/const/const';
+import { useNavigate } from 'react-router-dom';
+import { setLocal } from '~/untils/localStogate';
+import useResponsive from '~/hooks/useResponsive';
 //----------------------------------------------------------------------------
 
 export default function Category() {
   const [category, setCategory] = React.useState<CategoryList>([]);
+  const navigate = useNavigate();
+  const isDesktop = useResponsive('up', 'md');
 
   const handleGetCategoryList = async () => {
     try {
@@ -27,6 +33,7 @@ export default function Category() {
         headers: { TokenCybersoft: ` ${CYBER_TOKEN}` },
       });
       setCategory(resp.data);
+      setLocal('category', resp.data);
     } catch (error: any) {
       console.error(error);
     }
@@ -40,17 +47,37 @@ export default function Category() {
     handleGetCategoryList();
   };
 
-  const handleCloseCategoryMenu = () => {
+  const handleCloseCategoryMenu = (id: string) => {
+    if (typeof id === 'string') {
+      navigate(`/DanhMucKhoaHoc/${id}`);
+    }
     setAnchorCategory(null);
   };
 
   return (
     <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title="Danh mục khóa học">
-        <IconButton onClick={handleOpenCategoryMenu}>
-          <ViewListRoundedIcon sx={{ fontSize: '2rem' }} />
-        </IconButton>
-      </Tooltip>
+      {isDesktop ? (
+        <Button
+          sx={{
+            fontSize: '1.6rem',
+            bgcolor: '#6259c1c2',
+            '&:hover': {
+              bgcolor: '#3b2dcffc',
+            },
+          }}
+          variant="contained"
+          onClick={handleOpenCategoryMenu}
+        >
+          Danh mục khóa học
+        </Button>
+      ) : (
+        <Tooltip title="Danh mục khóa học">
+          <IconButton onClick={handleOpenCategoryMenu}>
+            <ViewListRoundedIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"
@@ -68,7 +95,10 @@ export default function Category() {
         onClose={handleCloseCategoryMenu}
       >
         {category.map((course) => (
-          <MenuItem key={course.maDanhMuc} onClick={handleCloseCategoryMenu}>
+          <MenuItem
+            key={course.maDanhMuc}
+            onClick={() => handleCloseCategoryMenu(course.maDanhMuc)}
+          >
             <Typography textAlign="center" variant="h6">
               {course.tenDanhMuc}
             </Typography>

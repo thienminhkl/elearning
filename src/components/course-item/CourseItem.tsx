@@ -20,10 +20,17 @@ export default function CourseItem({ course }: Props) {
   const [value, setValue] = useState<number | null>(4.5);
 
   return (
-    <Card sx={{ maxWidth: 345, textAlign: 'center' }}>
+    <Card
+      variant="outlined"
+      sx={{
+        maxWidth: 345,
+        textAlign: 'center',
+        borderRadius: 3,
+      }}
+    >
       <Box sx={{ position: 'relative' }}>
         <img
-          style={{ height: 150, width: '100%' }}
+          style={{ height: 140, width: 230, objectFit: 'contain' }}
           src={course?.hinhAnh}
           alt={course?.moTa}
           onError={(e) => ((e.target as HTMLImageElement).src = defaultImg)}

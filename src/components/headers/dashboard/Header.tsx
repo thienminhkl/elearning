@@ -8,8 +8,8 @@ import useResponsive from '~/hooks/useResponsive';
 import { useState } from 'react';
 // components
 import Category from '~/components/category/Category';
-import SearchBar from '~/components/search/Searchbar';
 import ProfileSetting from '~/components/profile-setting/ProfileSetting';
+import SearchBar from '~/components/search/Searchbar';
 
 // ----------------------------------------------------------------------
 
@@ -25,14 +25,20 @@ export default function Header() {
         <>
           {isDesktop && (
             <Stack direction={'row'} alignItems="center">
-              <LocalLibraryRoundedIcon sx={{ fontSize: '2rem' }} />
-              <Typography variant="h4" sx={{ mr: 2.5, ml: 0.5 }}>
-                Elearning
-              </Typography>
+              <IconButton href="/" sx={{ color: 'white' }}>
+                <LocalLibraryRoundedIcon sx={{ fontSize: '2rem' }} />
+                <Typography variant="h4" sx={{ mr: 2.5, ml: 0.5 }}>
+                  Elearning
+                </Typography>
+              </IconButton>
             </Stack>
           )}
 
-          {!isDesktop && <LocalLibraryRoundedIcon sx={{ mr: 1.5 }} />}
+          {!isDesktop && (
+            <IconButton href="/" sx={{ color: 'white' }}>
+              <LocalLibraryRoundedIcon sx={{ mr: 1.5 }} />
+            </IconButton>
+          )}
           <Category />
           <SearchBar />
           {isLogin ? (
