@@ -1,14 +1,13 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import CourseItem from '~/components/course-item/CourseItem';
 import { CYBER_TOKEN } from '~/const/const';
-import { Course, CourseList } from '~/type/course/course';
-import './Courses.scss';
+import { CourseList } from '~/type/course/course';
+import ListCourse from '../list-course/ListCourse';
 
 //---------------------------------------------------------------------
 
-export default function Courses() {
+export default function HomeCourses() {
   const [listCourse, setListCourse] = useState<CourseList | null>([]);
 
   const handleGetCourse = async () => {
@@ -30,23 +29,10 @@ export default function Courses() {
   }, []);
 
   return (
-    <Stack m={3}>
-      <Typography variant="h4" sx={{ my: 2 }}>
-        Các khóa học mới nhất
-      </Typography>
-      <Box
-        gap={4}
-        display="grid"
-        gridTemplateColumns={{
-          xs: 'repeat(1, 1fr)',
-          sm: 'repeat(2, 1fr)',
-          md: 'repeat(4, 1fr)',
-        }}
-      >
-        {listCourse?.map((course: Course) => (
-          <CourseItem course={course} key={course?.maKhoaHoc} />
-        ))}
-      </Box>
+    <Stack bgcolor={'#cadefc63'}>
+      <Stack m={3}>
+        <ListCourse listCourse={listCourse} page={1} />
+      </Stack>
     </Stack>
   );
 }

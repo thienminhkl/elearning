@@ -1,6 +1,5 @@
-import './Home.scss';
 //component
-import Courses from '../Courses/Courses';
+import Courses from '~/components/home-courses/HomeCourses';
 import Carousel from '~/components/carousel/Carousel';
 
 //---------------------------------------------------------------------
