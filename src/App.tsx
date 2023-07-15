@@ -18,8 +18,8 @@ export function App() {
           <Route path=":TenKhoaHoc" element={<Search />} />
         </Route>
         <Route path="profile" element={<Profile />}></Route>
-        <Route path="detail">
-          <Route path=":detailID" element={<Detail />} />
+        <Route path="ChiTiet">
+          <Route path=":MaKhoaHoc" element={<Detail />} />
         </Route>
         <Route path="DanhMucKhoaHoc">
           <Route path=":MaDanhMuc" element={<Courses />} />

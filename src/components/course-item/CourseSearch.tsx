@@ -56,7 +56,7 @@ function CourseSearch({ course }: Props) {
                 variant={'contained'}
                 size="medium"
                 sx={{ width: 10, mt: 5 }}
-                href={`/detail/${course?.maKhoaHoc}`}
+                href={`/ChiTiet/${course?.maKhoaHoc}`}
               >
                 Xem
               </Button>

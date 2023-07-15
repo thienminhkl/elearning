@@ -42,7 +42,7 @@ export default function Header() {
           <Category />
           <SearchBar />
           {isLogin ? (
-            <IconButton>
+            <IconButton href="/login">
               <LoginRoundedIcon />
             </IconButton>
           ) : (
