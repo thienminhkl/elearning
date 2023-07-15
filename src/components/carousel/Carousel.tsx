@@ -1,4 +1,3 @@
-import './Carousel.scss';
 //@mui
 import { Button, Stack, Typography } from '@mui/material';
 //hooks
@@ -13,21 +12,38 @@ function Carousel() {
   const isMobile = useResponsive('down', 'sm');
 
   return (
-    <Stack className="carousel">
-      <img className="img" src={imgCarousel} alt={'elearning-carousel'} />
+    <Stack position={'relative'}>
+      <img
+        className="img"
+        src={imgCarousel}
+        alt={'elearning-carousel'}
+        style={{
+          objectFit: 'fill',
+          height: '50%',
+          width: '100%',
+        }}
+      />
       {isDesktop
         ? !isMobile && (
-            <Stack width={'30%'} spacing={3} className="carousel-text">
-              <Typography variant="h2" color={'#f8f403'}>
+            <Stack
+              width={'30%'}
+              spacing={3}
+              sx={{
+                position: 'absolute',
+                top: '20%',
+                right: '10%',
+              }}
+            >
+              <Typography variant="h2" color={'#05a8ff'}>
                 KHỞI ĐẦU SỰ NGHIỆP CỦA BẠN
               </Typography>
-              <Typography variant="h4" color={'#ffffff'}>
+              <Typography variant="h4" color={'white'}>
                 Trở thành lập trình chuyên nghiệp tại CyberSoft
               </Typography>
               <Stack direction={'row'} spacing={2} mr={2}>
                 <Button
                   variant="contained"
-                  sx={{ fontSize: '1.6rem', color: '#f8f403' }}
+                  sx={{ fontSize: '1.6rem', color: 'white' }}
                 >
                   Xem khóa học
                 </Button>
@@ -41,17 +57,25 @@ function Carousel() {
             </Stack>
           )
         : !isMobile && (
-            <Stack width={'40%'} spacing={2} className="carousel-text">
-              <Typography variant="h4" color={'#f8f403'}>
+            <Stack
+              width={'40%'}
+              spacing={2}
+              sx={{
+                position: 'absolute',
+                top: '20%',
+                right: '10%',
+              }}
+            >
+              <Typography variant="h4" color={'#05a8ff'}>
                 KHỞI ĐẦU SỰ NGHIỆP CỦA BẠN
               </Typography>
-              <Typography variant="h5" color={'#ffffff'}>
+              <Typography variant="h5" color={'white'}>
                 Trở thành lập trình chuyên nghiệp tại CyberSoft
               </Typography>
               <Stack direction={'row'} spacing={1}>
                 <Button
                   variant="contained"
-                  sx={{ fontSize: '1.2rem', color: '#f8f403' }}
+                  sx={{ fontSize: '1.2rem', color: 'white' }}
                 >
                   Xem khóa học
                 </Button>
@@ -65,18 +89,26 @@ function Carousel() {
             </Stack>
           )}
       {isMobile && (
-        <Stack width={'60%'} spacing={1} className="carousel-text">
-          <Typography variant="h5" color={'#f8f403'}>
+        <Stack
+          width={'60%'}
+          spacing={1}
+          sx={{
+            position: 'absolute',
+            top: '20%',
+            right: '10%',
+          }}
+        >
+          <Typography variant="h5" color={'#05a8ff'}>
             KHỞI ĐẦU SỰ NGHIỆP CỦA BẠN
           </Typography>
-          <Typography variant="h6" color={'#ffffff'}>
+          <Typography variant="h6" color={'white'}>
             Trở thành lập trình chuyên nghiệp tại CyberSoft
           </Typography>
           <Stack direction={'row'} spacing={1}>
             <Button
               size="small"
               variant="contained"
-              sx={{ fontSize: '0.7rem', color: '#f8f403' }}
+              sx={{ fontSize: '0.7rem', color: 'white' }}
             >
               Xem khóa học
             </Button>
