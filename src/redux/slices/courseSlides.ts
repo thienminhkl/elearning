@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { setLocal, getLocal } from '../../untils/localStogate';
 
 interface CourseType{
   a: string
@@ -19,9 +18,9 @@ const ProductSlice = createSlice({
     }
 });
 
-export const {
-  nothing
-} = ProductSlice.actions
+// export const {
+//   nothing
+// } = ProductSlice.actions
 
 export default ProductSlice.reducer
 

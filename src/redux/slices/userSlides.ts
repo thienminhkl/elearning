@@ -4,7 +4,7 @@ import { UpdateFormValuesProps } from '~/components/profile/ProfileUser';
 import { ACCESS_TOKEN, CYBER_TOKEN, PROFILE_DATA } from '~/const/const';
 import { LogFormValuesProps } from '~/pages/Login/Login';
 import { RegisFormValuesProps } from '~/pages/Register/Register';
-import { Course, CourseDetail } from '~/type/course/course';
+import { CourseDetail } from '~/type/course/course';
 import { UserProfile } from '~/type/user/user';
 import { deleteLocalStrgKey, getLocal, setLocal } from '~/untils/localStogate';
 
