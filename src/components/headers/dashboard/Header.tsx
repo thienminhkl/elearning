@@ -2,20 +2,22 @@
 import { AppBar, IconButton, Stack, Toolbar, Typography } from '@mui/material';
 import LocalLibraryRoundedIcon from '@mui/icons-material/LocalLibraryRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+//redux
+import { useSelector } from 'react-redux';
+import { RootState } from '~/redux/store';
 // hooks
 import useResponsive from '~/hooks/useResponsive';
-//react
-import { useState } from 'react';
 // components
 import Category from '~/components/category/Category';
 import ProfileSetting from '~/components/profile-setting/ProfileSetting';
 import SearchBar from '~/components/search/Searchbar';
-
 // ----------------------------------------------------------------------
 
 export default function Header() {
   const isDesktop = useResponsive('up', 'md');
-  const isLogin = useState(false);
+  const { isLoggedIn, userProfile } = useSelector(
+    (state: RootState) => state.user
+  );
 
   return (
     <AppBar
@@ -41,12 +43,12 @@ export default function Header() {
           )}
           <Category />
           <SearchBar />
-          {isLogin ? (
+          {!isLoggedIn ? (
             <IconButton href="/login">
               <LoginRoundedIcon />
             </IconButton>
           ) : (
-            <ProfileSetting />
+            <ProfileSetting name={userProfile?.hoTen} />
           )}
         </>
       </Toolbar>

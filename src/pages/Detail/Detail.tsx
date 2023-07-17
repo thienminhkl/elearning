@@ -1,3 +1,5 @@
+import axios from 'axios';
+//@mui
 import {
   Box,
   Button,
@@ -9,23 +11,33 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import axios from 'axios';
+//react
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ACCESS_TOKEN, CYBER_TOKEN } from '~/const/const';
-import { Course } from '~/type/course/course';
-import defaultImg from '../../assets/img/default-course.png';
-import backGroundImg from '../../assets/img/detail-carou.jpg';
-import { getLocal } from '~/untils/localStogate';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+//const
+import { CYBER_TOKEN } from '~/const/const';
+//hooks
 import useResponsive from '~/hooks/useResponsive';
-
+//redux
+import { handleRegistrationCourse } from '~/redux/slices/userSlides';
+import { RootState, dispatch } from '~/redux/store';
+//type
+import { Course } from '~/type/course/course';
+//assets
+import defaultImg from '~/assets/img/default-course.png';
+import backGroundImg from '~/assets/img/detail-carou.jpg';
 //---------------------------------------------------------------------
 
 function Detail() {
-  const isDesktop = useResponsive('up', 'md');
+  const navigate = useNavigate();
   const { MaKhoaHoc } = useParams();
+  const isDesktop = useResponsive('up', 'md');
   const [course, setCourse] = useState<Course>();
   const [value, setValue] = useState<number | null>(4.5);
+  const { userProfile, isLoggedIn } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const handleGetCourse = async () => {
     try {
@@ -40,31 +52,25 @@ function Detail() {
     }
   };
 
-  const handleRegisterCourse = async () => {
-    try {
-      await axios({
-        url: 'https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/DangKyKhoaHoc',
-        method: 'post',
-        headers: {
-          TokenCybersoft: ` ${CYBER_TOKEN}`,
-          Authorization: `Bearer ${getLocal(ACCESS_TOKEN)}`,
-        },
-        data: {
-          maKhoaHoc: MaKhoaHoc,
-          taiKhoan: 'anhcuong1',
-        },
-      });
-    } catch (error: any) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     if (MaKhoaHoc) {
       handleGetCourse();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [MaKhoaHoc]);
+
+  const registerCourse = () => {
+    if (!isLoggedIn) {
+      if (
+        window.confirm(
+          'Bạn chưa đăng nhập, bấm OK để chuyển đến trang đăng nhập'
+        )
+      ) {
+        navigate('/login');
+      }
+    }
+    dispatch(handleRegistrationCourse(userProfile, course));
+  };
 
   return (
     <Card
@@ -127,7 +133,7 @@ function Detail() {
                     fontSize: '1.2rem',
                     maxWidth: 150,
                   }}
-                  onClick={() => handleRegisterCourse()}
+                  onClick={() => registerCourse()}
                 >
                   Đăng ký
                 </Button>
@@ -177,7 +183,7 @@ function Detail() {
                       fontSize: '1rem',
                       width: 150,
                     }}
-                    onClick={() => handleRegisterCourse()}
+                    onClick={() => registerCourse()}
                   >
                     Đăng ký
                   </Button>

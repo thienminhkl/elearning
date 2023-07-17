@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from '~/components/footers/admin/Footer';
 import Header from '~/components/headers/admin/Header';
 import Loading from '~/components/loading/Loading';
+
 //---------------------------------------------------------------------------------
 
 function AdminPlate() {

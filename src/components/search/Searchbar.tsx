@@ -8,11 +8,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 //-------------------------------------------------------
 export default function SearchBar() {
-  const [searchKey, setSearchKey] = useState<string>();
+  const [searchKey, setSearchKey] = useState<string>('');
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    navigate(`/search/${searchKey}`);
+    if (searchKey) {
+      navigate(`/TimKiemKhoaHoc/${searchKey}`);
+    }
   };
 
   return (
