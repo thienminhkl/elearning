@@ -9,21 +9,31 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+//redux
+import { dispatch } from '~/redux/store';
+import { handleUnregistrationCourse } from '~/redux/slices/userSlides';
 //asset
 import defaultImg from '~/assets/img/default-course.png';
 //type
 import { Course } from '~/type/course/course';
+import { UserProfile } from '~/type/user/user';
 
 //------------------------------------------------------------
 type Props = {
   course: Course | null;
+  unregistration?: boolean;
+  profile?: UserProfile | null;
 };
 
-function CourseSearch({ course }: Props) {
+function CourseSearch({ course, unregistration, profile }: Props) {
   const [value, setValue] = useState<number | null>(4.5);
 
+  const handleUnregis = async () => {
+    dispatch(handleUnregistrationCourse(profile, course?.maKhoaHoc));
+  };
+
   return (
-    <Stack>
+    <Stack width={'100%'}>
       <Divider />
       <Grid container spacing={2} mt={1}>
         <Grid item xs={12} sm={3}>
@@ -35,7 +45,7 @@ function CourseSearch({ course }: Props) {
           />
         </Grid>
         <Grid item xs={12} sm={9}>
-          <Typography variant="h5">{course?.tenKhoaHoc}</Typography>
+          <Typography variant="h4">{course?.tenKhoaHoc}</Typography>
           <Stack direction={'row'} justifyContent={'space-between'} spacing={2}>
             <Typography variant="h6">{course?.moTa}</Typography>
             <Stack spacing={2} sx={{ placeItems: 'flex-end' }}>
@@ -52,14 +62,25 @@ function CourseSearch({ course }: Props) {
               <Typography variant="subtitle2">
                 ({course?.soLuongHocVien}) học viên
               </Typography>
-              <Button
-                variant={'contained'}
-                size="medium"
-                sx={{ width: 10, mt: 5 }}
-                href={`/ChiTiet/${course?.maKhoaHoc}`}
-              >
-                Xem
-              </Button>
+              {unregistration ? (
+                <Button
+                  onClick={handleUnregis}
+                  variant={'contained'}
+                  size="medium"
+                  sx={{ width: 10, mt: 5 }}
+                >
+                  Hủy
+                </Button>
+              ) : (
+                <Button
+                  variant={'contained'}
+                  size="medium"
+                  sx={{ width: 10, mt: 5 }}
+                  href={`/ChiTiet/${course?.maKhoaHoc}`}
+                >
+                  Xem
+                </Button>
+              )}
             </Stack>
           </Stack>
         </Grid>

@@ -20,10 +20,16 @@ export default function RHFTextField({ name, helperText, ...other }: Props) {
         <TextField
           {...field}
           fullWidth
-          value={typeof field.value === 'number' && field.value === 0 ? '' : field.value}
+          value={
+            typeof field.value === 'number' && field.value === 0
+              ? ''
+              : field.value
+          }
           error={!!error}
           helperText={error ? error?.message : helperText}
           {...other}
+          inputProps={{ style: { fontSize: '1.6rem' } }}
+          InputLabelProps={{ style: { fontSize: '1.6rem' } }}
         />
       )}
     />

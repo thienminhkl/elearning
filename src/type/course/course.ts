@@ -1,3 +1,5 @@
+import { User } from "../user/user";
+//---------------------------------------------------------------
 export type CategoryList = Category[];
 export type Category = {
   maDanhMuc: string;
@@ -19,13 +21,18 @@ export type Course = {
   tenKhoaHoc: string;
 };
 
-export type User = {
-  hoTen: string;
-  maLoaiNguoiDung: string;
-  taiKhoan: string;
-  tenLoaiNguoiDung: string;
-};
 export type CategoryCourse = {
   maDanhMucKhoaHoc: string;
   tenDanhMucKhoaHoc: string;
+};
+
+export type CourseDetail = {
+  maKhoaHoc: string,
+  tenKhoaHoc: string,
+  biDanh: string,
+  moTa: string,
+  luotXem: number,
+  hinhAnh: string,
+  ngayTao: string | number | Date,
+  danhGia: number
 };

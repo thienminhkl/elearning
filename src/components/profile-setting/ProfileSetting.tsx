@@ -1,5 +1,8 @@
+//react
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+//@mui
 import {
-  Avatar,
   Box,
   IconButton,
   Menu,
@@ -7,11 +10,24 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import * as React from 'react';
+//redux
+import { logout } from '~/redux/slices/userSlides';
+import { dispatch } from '~/redux/store';
+//components
+import CustomAvatar from '../avatar/CustomAvatar';
+//------------------------------------------------------------------
+type Props = {
+  name: string | undefined;
+};
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [
+  { label: 'Người dùng', nav: '/profile' },
+  { label: 'Đăng xuất', nav: '/login' },
+];
 
-function ProfileSetting() {
+function ProfileSetting({ name }: Props) {
+  const navigate = useNavigate();
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -22,11 +38,30 @@ function ProfileSetting() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleNav = (nav: string) => {
+    if (nav === '/login') {
+      dispatch(logout());
+    }
+    setAnchorElUser(null);
+    navigate(nav);
+  };
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <CustomAvatar
+            src={name}
+            alt={name}
+            name={name}
+            sx={{
+              mx: 'auto',
+              borderWidth: 2,
+              borderStyle: 'solid',
+              borderColor: 'common.white',
+            }}
+          />{' '}
         </IconButton>
       </Tooltip>
       <Menu
@@ -45,9 +80,9 @@ function ProfileSetting() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
+        {settings.map((setting, index) => (
+          <MenuItem key={index} onClick={() => handleNav(setting.nav)}>
+            <Typography textAlign="center">{setting.label}</Typography>
           </MenuItem>
         ))}
       </Menu>
