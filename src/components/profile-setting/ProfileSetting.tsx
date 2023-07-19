@@ -15,17 +15,24 @@ import { logout } from '~/redux/slices/userSlides';
 import { dispatch } from '~/redux/store';
 //components
 import CustomAvatar from '../avatar/CustomAvatar';
+import { UserProfile } from '~/type/user/user';
 //------------------------------------------------------------------
 type Props = {
-  name: string | undefined;
+  data: UserProfile | null;
 };
 
-const settings = [
-  { label: 'Người dùng', nav: '/profile' },
-  { label: 'Đăng xuất', nav: '/login' },
+const settingsDash = [
+  { label: 'Người dùng', nav: '/HoSo' },
+  { label: 'Đăng xuất', nav: '/DangNhap' },
 ];
 
-function ProfileSetting({ name }: Props) {
+const settingsAd = [
+  { label: 'Admin', nav: '/admin' },
+  { label: 'Người dùng', nav: '/HoSo' },
+  { label: 'Đăng xuất', nav: '/DangNhap' },
+];
+
+function ProfileSetting({ data }: Props) {
   const navigate = useNavigate();
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -40,7 +47,7 @@ function ProfileSetting({ name }: Props) {
   };
 
   const handleNav = (nav: string) => {
-    if (nav === '/login') {
+    if (nav === '/DangNhap') {
       dispatch(logout());
     }
     setAnchorElUser(null);
@@ -52,16 +59,16 @@ function ProfileSetting({ name }: Props) {
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <CustomAvatar
-            src={name}
-            alt={name}
-            name={name}
+            src={data?.hoTen}
+            alt={data?.hoTen}
+            name={data?.hoTen}
             sx={{
               mx: 'auto',
               borderWidth: 2,
               borderStyle: 'solid',
               borderColor: 'common.white',
             }}
-          />{' '}
+          />
         </IconButton>
       </Tooltip>
       <Menu
@@ -80,11 +87,13 @@ function ProfileSetting({ name }: Props) {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting, index) => (
-          <MenuItem key={index} onClick={() => handleNav(setting.nav)}>
-            <Typography textAlign="center">{setting.label}</Typography>
-          </MenuItem>
-        ))}
+        {(data?.maLoaiNguoiDung === 'HV' ? settingsDash : settingsAd).map(
+          (setting, index) => (
+            <MenuItem key={index} onClick={() => handleNav(setting.nav)}>
+              <Typography textAlign="center">{setting.label}</Typography>
+            </MenuItem>
+          )
+        )}
       </Menu>
     </Box>
   );

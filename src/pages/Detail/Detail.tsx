@@ -66,7 +66,7 @@ function Detail() {
           'Bạn chưa đăng nhập, bấm OK để chuyển đến trang đăng nhập'
         )
       ) {
-        navigate('/login');
+        navigate('/DangNhap');
       }
     }
     dispatch(handleRegistrationCourse(userProfile, course));
