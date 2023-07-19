@@ -1,16 +1,8 @@
-# clone project
+## For Admin Role:
 
-clone: https://github.com/thienminhkl/elearning.git
-project using MUI UI: https://mui.com/material-ui/getting-started/overview/
+user: anhcuong1
+pw: votinh123
 
-# install npm
+## Trello link: https://trello.com/w/elearning885
 
-npm i
-
-# start
-
-npm start
-
-### install .pretiierrc
-
-Shift + Crt + P -> search "Format Document With" -> select Prettier
+## Trang tinh phan cong cong viec: https://docs.google.com/spreadsheets/d/1mhm7TVK6CNyV121hp2YUuIC2CpFS4BHnm7URar_TlwM/edit#gid=0
