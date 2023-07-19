@@ -40,7 +40,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/profile');
+      navigate('/HoSo');
     }
   }, [isLoggedIn, navigate]);
 
@@ -136,7 +136,7 @@ function LoginForm() {
             )}
             <Stack sx={{ my: 2 }}>
               <NavLink
-                to="/register"
+                to="/DangKy"
                 style={{ fontSize: '1.2rem', marginLeft: 'auto' }}
               >
                 Bạn chưa có tài khoản? Đăng ký

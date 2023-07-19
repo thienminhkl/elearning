@@ -6,6 +6,12 @@ export type Category = {
   tenDanhMuc: string;
 };
 
+export type CourseControl = {
+  biDanh: string;
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+};
+
 export type CourseList = Course[];
 export type Course = {
   biDanh: string;

@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 // slices
-import productSlices from './slices/courseSlides';
+import courseSlides from './slices/courseSlides';
 import userSlice from './slices/userSlides';
+import listUserSlides from './slices/listUserSlides';
 
 // ----------------------------------------------------------------------
 const rootReducer = combineReducers({
   user: userSlice,
-  product: productSlices,
+  course: courseSlides,
+  listUser: listUserSlides,
 });
 
 export default rootReducer;

@@ -163,7 +163,7 @@ function Register() {
             )}
             <Stack>
               <NavLink
-                to="/login"
+                to="/DangNhap"
                 style={{ fontSize: '1.2rem', marginLeft: 'auto' }}
               >
                 Bạn đã tài khoản? Đăng nhập

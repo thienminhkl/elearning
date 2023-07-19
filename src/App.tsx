@@ -12,21 +12,22 @@ export function App() {
     <Routes>
       <Route path="" element={<HomePlate />}>
         <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
+        <Route path="DangNhap" element={<Login />} />
         <Route path="TimKiemKhoaHoc">
           <Route path=":TenKhoaHoc" element={<Search />} />
         </Route>
-        <Route path="profile" element={<Profile />} />
+        <Route path="HoSo" element={<Profile />} />
         <Route path="ChiTiet">
           <Route path=":MaKhoaHoc" element={<Detail />} />
         </Route>
         <Route path="DanhMucKhoaHoc">
           <Route path=":MaDanhMuc" element={<Courses />} />
         </Route>
-        <Route path="register" element={<Register />} />
+        <Route path="DangKy" element={<Register />} />
       </Route>
-      <Route path="/" element={<AdminPlate />}>
-        <Route path="admin" element={<Admin />} />
+      <Route path="admin" element={<AdminPlate />}>
+        <Route path="QuanLyNguoiDung" element={<ControlUser />} />
+        <Route path="QuanLyKhoaHoc" element={<ControlCourse />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
@@ -50,5 +51,6 @@ const Detail = lazy(() => import('./pages/Detail/Detail'));
 const Search = lazy(() => import('./pages/Search/Search'));
 const Register = lazy(() => import('./pages/Register/Register'));
 const Courses = lazy(() => import('./pages/CoursesCatalog/CoursesCatalog'));
-const Admin = lazy(() => import('./pages/Admin/Admin'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+const ControlCourse = lazy(() => import('./pages/Admin/ControlCourse'));
+const ControlUser = lazy(() => import('./pages/Admin/ControlUser'));
