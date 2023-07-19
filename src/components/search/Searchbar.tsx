@@ -7,7 +7,10 @@ import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 //-------------------------------------------------------
-export default function SearchBar() {
+type Props = {
+  labelSearch: string;
+};
+export default function SearchBar({ labelSearch }: Props) {
   const [searchKey, setSearchKey] = useState<string>('');
   const navigate = useNavigate();
 
@@ -29,7 +32,7 @@ export default function SearchBar() {
       <TextField
         fullWidth
         value={searchKey}
-        placeholder="Tìm kiếm khóa học..."
+        placeholder={labelSearch}
         onChange={(e) => setSearchKey(e.target.value)}
         InputProps={{
           startAdornment: (

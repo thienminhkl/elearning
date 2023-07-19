@@ -24,7 +24,7 @@ const initialState: ProfileData = {
 
 
 const slice = createSlice({
-  name: 'product',
+  name: 'user',
   initialState,
   reducers: {
     login(state, action) {
@@ -67,8 +67,7 @@ export function handleGetProfile() {
       console.error(error);
     }
   };
-}
-
+};
 export function handleLogin(
   data: LogFormValuesProps,
   navigate: (nav: string)  => void,
@@ -88,14 +87,13 @@ export function handleLogin(
       setLocal(ACCESS_TOKEN, resp.data.accessToken);      
       dispatch(handleGetProfile());
       alert('Đăng nhập thành công');
-      navigate('/profile');
+      navigate('/HoSo');
     } catch (error) {
       console.error(error);
       handleSetError(error)
     }
   };
-}
-
+};
 export function handleRegister(
   data: RegisFormValuesProps,
   navigate: (nav: string)  => void,
@@ -117,13 +115,13 @@ export function handleRegister(
         }
       });
       alert('Đăng ký thành công');
-      navigate('/login');
+      navigate('/DangNhap');
     } catch (error) {
       console.error(error);
       handleSetError(error)
     }
   };
-}
+};
 export function handleUpdateUserProfile(
   data: UpdateFormValuesProps,
   restVal: {
@@ -167,8 +165,7 @@ export function handleUpdateUserProfile(
       handleSetError(error)
     }
   };
-}
-
+};
 export function handleUnregistrationCourse(
   data: UserProfile | null | undefined, 
   id: string | undefined

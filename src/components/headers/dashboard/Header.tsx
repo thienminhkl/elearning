@@ -42,13 +42,13 @@ export default function Header() {
             </IconButton>
           )}
           <Category />
-          <SearchBar />
+          <SearchBar labelSearch={'Tìm kiếm khóa học...'} />
           {!isLoggedIn ? (
-            <IconButton href="/login">
+            <IconButton href="/DangNhap">
               <LoginRoundedIcon />
             </IconButton>
           ) : (
-            <ProfileSetting name={userProfile?.hoTen} />
+            <ProfileSetting data={userProfile} />
           )}
         </>
       </Toolbar>
