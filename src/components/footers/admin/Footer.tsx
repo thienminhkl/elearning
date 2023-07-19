@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import Copyright from '~/components/copyright/Copyright';
+import Copyright from './Copyright';
 
 //---------------------------------------------------------------------------------
 
